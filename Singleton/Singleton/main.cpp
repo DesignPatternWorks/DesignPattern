@@ -20,14 +20,14 @@ public:
 		return instance.get();
 	}
 
-	void function()
+	void Function()
 	{
-		std::cout << "Singleton Pattern" << std::endl;
+		std::cout << "Singleton::Function()" << std::endl;
 	}
 };
 std::shared_ptr<Singleton> Singleton::instance(nullptr);
 
 void main()
 {
-	Singleton::InstancePtr()->function();
+	Singleton::InstancePtr()->Function();
 }
