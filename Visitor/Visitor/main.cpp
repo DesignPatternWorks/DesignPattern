@@ -24,18 +24,18 @@ public:
 class ElementA : public Element
 {
 public:
-	void Function(Visitor* Visitor_) override
+	void Function(Visitor* pVisitor) override
 	{
-		Visitor_->Visit(this);
+		pVisitor->Visit(this);
 	}
 };
 
 class ElementB : public Element
 {
 public:
-	void Function(Visitor* Visitor_) override
+	void Function(Visitor* pVisitor) override
 	{
-		Visitor_->Visit(this);
+		pVisitor->Visit(this);
 	}
 };
 
@@ -67,12 +67,20 @@ public:
 
 void main()
 {
-	Element *EA(new ElementA), *EB(new ElementB);
-	VisitorA *VA(new VisitorA);
-	VisitorB *VB(new VisitorB);
+	Element *l_pElementA(new ElementA), *l_pElementB(new ElementB);
+	Visitor *l_pVisitorA(new VisitorA), *l_pVisitorB(new VisitorB);
 
-	EA->Function(VA);
-	EA->Function(VB);
-	EB->Function(VA);
-	EB->Function(VB);
+	l_pElementA->Function(l_pVisitorA);
+	l_pElementA->Function(l_pVisitorB);
+	l_pElementB->Function(l_pVisitorA);
+	l_pElementB->Function(l_pVisitorB);
+
+	delete l_pElementA;
+	delete l_pElementB;
+	delete l_pVisitorA;
+	delete l_pVisitorB;
+	l_pElementA = nullptr;
+	l_pElementB = nullptr;
+	l_pVisitorA = nullptr;
+	l_pVisitorB = nullptr;
 }

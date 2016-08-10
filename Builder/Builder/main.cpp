@@ -15,35 +15,52 @@ public:
 
 class ConcreteBuilder : public Builder
 {
-	Product* m_Product;
+	Product* m_pProduct;
 public:
-	~ConcreteBuilder() { if (m_Product != nullptr) delete m_Product; }
+	ConcreteBuilder() : m_pProduct(nullptr) {}
+	~ConcreteBuilder() 
+	{
+		if (m_pProduct != nullptr)
+		{
+			delete m_pProduct;
+			m_pProduct = nullptr;
+		}
+	}
 
-	void Build() override { m_Product = new Product; }
-	Product* GetResult() override { return m_Product; }
+	void Build() override { m_pProduct = new Product; }
+	Product* GetResult() override { return m_pProduct; }
 };
 
 class Director
 {
-	Builder* m_Builder;
+	Builder* m_pBuilder;
 public:
-	Director(Builder* Builder_) : m_Builder(Builder_) {}
-	~Director() { if (m_Builder != nullptr) delete m_Builder; }
+	Director(Builder* pBuilder) : m_pBuilder(pBuilder) {}
+	~Director()
+	{
+		if (m_pBuilder != nullptr)
+		{
+			delete m_pBuilder;
+			m_pBuilder = nullptr;
+		}
+	}
 
 	Product* Construct() 
 	{
-		m_Builder->Build();
-		return m_Builder->GetResult();
+		m_pBuilder->Build();
+		return m_pBuilder->GetResult();
 	}
 };
 
 void main()
 {
-	Director* D(new Director(new ConcreteBuilder));
-	Product* P(D->Construct());
+	Director* l_pDirector(new Director(new ConcreteBuilder));
+	Product* l_pProduct(l_pDirector->Construct());
 
-	P->Function();
+	l_pProduct->Function();
 
-	delete D;
-	delete P;
+	delete l_pDirector;
+	delete l_pProduct;
+	l_pDirector = nullptr;
+	l_pProduct = nullptr;
 }

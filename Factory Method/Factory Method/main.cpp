@@ -26,18 +26,29 @@ protected:
 	virtual Product* CreateProduct() = 0;
 };
 
-template <typename T>
-class Creator : public Factory
+class CreatorA : public Factory
 {
-	Product* CreateProduct() override { return new T; }
+protected:
+	Product* CreateProduct() override { return new ProductA; }
+};
+
+class CreatorB : public Factory
+{
+protected:
+	Product* CreateProduct() override { return new ProductB; }
 };
 
 void main()
 {
-	Creator<ProductA> CreatorA;
-	Creator<ProductB> CreatorB;
-	Product *PA = CreatorA.Create(), *PB = CreatorB.Create();
+	CreatorA l_CreatorA;
+	CreatorB l_CreatorB;
+	Product *l_pProductA = l_CreatorA.Create(), *l_pProductB = l_CreatorB.Create();
 
-	PA->Function();
-	PB->Function();
+	l_pProductA->Function();
+	l_pProductB->Function();
+
+	delete l_pProductA;
+	delete l_pProductB;
+	l_pProductA = nullptr;
+	l_pProductB = nullptr;
 }

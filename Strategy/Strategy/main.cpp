@@ -1,5 +1,4 @@
 #include <iostream>
-#include <memory>
 
 class Strategy
 {
@@ -27,23 +26,33 @@ public:
 
 class Structure
 {
-	std::shared_ptr<Strategy> m_Strategy;
+	Strategy* m_pStrategy;
 public:
-	void SetStrategy(Strategy* Strategy_) { m_Strategy.reset(Strategy_); }
+	Structure() : m_pStrategy(nullptr) {}
+	~Structure()
+	{
+		if (m_pStrategy != nullptr)
+		{
+			delete m_pStrategy;
+			m_pStrategy = nullptr;
+		}
+	}
+
+	void SetStrategy(Strategy* pStrategy) { m_pStrategy = pStrategy; }
 	void Function()
 	{
-		if (m_Strategy != nullptr)
-			m_Strategy->Function();
+		if (m_pStrategy != nullptr)
+			m_pStrategy->Function();
 	}
 };
 
 void main()
 {
-	Structure structure;
+	Structure l_Structure;
 	
-	structure.SetStrategy(new StrategyA);
-	structure.Function();
+	l_Structure.SetStrategy(new StrategyA);
+	l_Structure.Function();
 
-	structure.SetStrategy(new StrategyB);
-	structure.Function();
+	l_Structure.SetStrategy(new StrategyB);
+	l_Structure.Function();
 }

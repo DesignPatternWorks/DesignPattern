@@ -47,31 +47,31 @@ public:
 
 void main()
 {
-	Subject* Subject_(new ConcreteSubject);
+	Subject* l_pSubject(new ConcreteSubject);
 
-	Observer* Observer1(new ConcreteObserver);
-	Observer* Observer2(new ConcreteObserver);
-	Observer* Observer3(new ConcreteObserver);
+	Observer* l_pObserver1(new ConcreteObserver);
+	Observer* l_pObserver2(new ConcreteObserver);
+	Observer* l_pObserver3(new ConcreteObserver);
 
-	Subject_->Attach(Observer1);
-	Subject_->Attach(Observer2);
-	Subject_->Attach(Observer3);
+	l_pSubject->Attach(l_pObserver1);
+	l_pSubject->Attach(l_pObserver2);
+	l_pSubject->Attach(l_pObserver3);
 
-	Subject_->Change();
+	l_pSubject->Change();
+	
+	l_pSubject->Detach(l_pObserver1);
+	l_pSubject->Detach(l_pObserver2);
+	l_pSubject->Detach(l_pObserver3);
 
-	Subject_->Detach(Observer1);
-	Subject_->Detach(Observer2);
-	Subject_->Detach(Observer3);
+	l_pSubject->Change();
 
-	Subject_->Change();
+	delete l_pSubject;
+	delete l_pObserver1;
+	delete l_pObserver2;
+	delete l_pObserver3;
 
-	delete Subject_;
-	delete Observer1;
-	delete Observer2;
-	delete Observer3;
-
-	Subject_ = nullptr;
-	Observer1 = nullptr;
-	Observer2 = nullptr;
-	Observer3 = nullptr;
+	l_pSubject = nullptr;
+	l_pObserver1 = nullptr;
+	l_pObserver2 = nullptr;
+	l_pObserver3 = nullptr;
 }

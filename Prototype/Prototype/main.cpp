@@ -1,41 +1,40 @@
-#include <iostream>
-
 class Prototype
 {
 public:
 	virtual Prototype* Clone() = 0;
 };
 
-class Concrete1 : public Prototype
+class ConcreteA : public Prototype
 {
 public:
-	Concrete1() = default;
-	Concrete1(Concrete1 &) = default;
-	Concrete1(Concrete1 &&) = default;
+	ConcreteA() = default;
+	ConcreteA(ConcreteA &) = default;
+	ConcreteA(ConcreteA &&) = default;
 
-	Prototype* Clone() override { return new Concrete1(*this); }
+	Prototype* Clone() override { return new ConcreteA(*this); }
 };
 
-class Concrete2 : public Prototype
+class ConcreteB : public Prototype
 {
 public:
-	Concrete2() = default;
-	Concrete2(Concrete2 &) = default;
-	Concrete2(Concrete2 &&) = default;
+	ConcreteB() = default;
+	ConcreteB(ConcreteB &) = default;
+	ConcreteB(ConcreteB &&) = default;
 
-	Prototype* Clone() override { return new Concrete2(*this); }
+	Prototype* Clone() override { return new ConcreteB(*this); }
 };
 
 void main()
 {
-	Prototype *Original1(new Concrete1), *Original2(new Concrete2), 
-		*Clone1(nullptr), *Clone2(nullptr);
+	Prototype *l_pOriginalA(new ConcreteA), *l_pOriginalB(new ConcreteB);
+	Prototype *l_pCloneA(l_pOriginalA->Clone()), *l_pCloneB(l_pOriginalB->Clone());
 
-	Clone1 = Original1->Clone();
-	Clone2 = Original2->Clone();
-
-	delete Original1;
-	delete Original2;
-	delete Clone1;
-	delete Clone2;
+	delete l_pOriginalA;
+	delete l_pOriginalB;
+	delete l_pCloneA;
+	delete l_pCloneB;
+	l_pOriginalA = nullptr;
+	l_pOriginalB = nullptr;
+	l_pCloneA = nullptr;
+	l_pCloneB = nullptr;
 }

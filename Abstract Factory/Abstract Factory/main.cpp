@@ -48,34 +48,58 @@ public:
 	}
 };
 
-template <typename T>
-class Factory
+class FactoryA
 {
-public:
-	T* Create() { return CreateProduct(); }
 protected:
-	virtual T* CreateProduct() = 0;
+	virtual ProductA* CreateProduct() = 0;
+public:
+	ProductA* Create() { return CreateProduct(); }
 };
 
-template <typename T1, typename T2>
-class Creator : public Factory<T1>
+class FactoryB
 {
 protected:
-	T1* CreateProduct() { return new T2; }
+	virtual ProductB* CreateProduct() = 0;
+public:
+	ProductB* Create() { return CreateProduct(); }
+};
+
+class CreatorAA : public FactoryA
+{
+protected:
+	ProductA* CreateProduct() override { return new ProductAA; }
+};
+
+class CreatorAB : public FactoryA
+{
+protected:
+	ProductA* CreateProduct() override { return new ProductAB; }
+};
+
+class CreatorBA : public FactoryB
+{
+protected:
+	ProductB* CreateProduct() override { return new ProductBA; }
+};
+
+class CreatorBB : public FactoryB
+{
+protected:
+	ProductB* CreateProduct() override { return new ProductBB; }
 };
 
 void main()
 {
-	Creator<ProductA, ProductAA> CreatorAA;
-	Creator<ProductA, ProductAB> CreatorAB;
-	Creator<ProductB, ProductBA> CreatorBA;
-	Creator<ProductB, ProductBB> CreatorBB;
+	CreatorAA l_CreatorAA;
+	CreatorAB l_CreatorAB;
+	CreatorBA l_CreatorBA;
+	CreatorBB l_CreatorBB;
 
-	ProductA *PAA(CreatorAA.Create()), *PAB(CreatorAB.Create());
-	ProductB *PBA(CreatorBA.Create()), *PBB(CreatorBB.Create());
+	ProductA *l_pProductAA(l_CreatorAA.Create()), *l_pProductAB(l_CreatorAB.Create());
+	ProductB *l_pProductBA(l_CreatorBA.Create()), *l_pProductBB(l_CreatorBB.Create());
 
-	PAA->Function();
-	PAB->Function();
-	PBA->Function();
-	PBB->Function();
+	l_pProductAA->Function();
+	l_pProductAB->Function();
+	l_pProductBA->Function();
+	l_pProductBB->Function();
 }

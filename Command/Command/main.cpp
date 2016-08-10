@@ -16,7 +16,25 @@ class ConcreteCommand : public Command
 {
 	Receiver* m_pReceiver;
 public:
-	void SetReceiver(Receiver* pReceiver) { m_pReceiver = pReceiver; }
+	ConcreteCommand() : m_pReceiver(nullptr) {}
+	~ConcreteCommand()
+	{
+		if (m_pReceiver != nullptr)
+		{
+			delete m_pReceiver;
+			m_pReceiver = nullptr;
+		}
+	}
+
+	void SetReceiver(Receiver* pReceiver) 
+	{
+		if (m_pReceiver != nullptr)
+		{
+			delete m_pReceiver;
+			m_pReceiver = nullptr;
+		}
+		m_pReceiver = pReceiver;
+	}
 	void Execute() override { m_pReceiver->Action(); }
 };
 
@@ -24,7 +42,25 @@ class Invoker
 {
 	Command* m_pCommand;
 public:
-	void SetCommand(Command* pCommand) { m_pCommand = pCommand; }
+	Invoker() : m_pCommand(nullptr) {}
+	~Invoker()
+	{
+		if (m_pCommand != nullptr)
+		{
+			delete m_pCommand;
+			m_pCommand = nullptr;
+		}
+	}
+
+	void SetCommand(Command* pCommand) 
+	{
+		if (m_pCommand != nullptr)
+		{
+			delete m_pCommand;
+			m_pCommand = nullptr;
+		}
+		m_pCommand = pCommand;
+	}
 	void Execute() { m_pCommand->Execute(); }
 };
 

@@ -41,29 +41,29 @@ class Caretaker
 {
 	std::stack<Memento*> m_Stack;
 public:
-	void PushMemento(Memento* Memento_) { m_Stack.push(Memento_); }
+	void PushMemento(Memento* pMemento) { m_Stack.push(pMemento); }
 	Memento* PopMemento() 
 	{
-		Memento* Memento_ = m_Stack.top();
+		Memento* pMemento = m_Stack.top();
 		m_Stack.pop();
-		return Memento_;
+		return pMemento;
 	}
 };
 
 void main()
 {
-	Caretaker Caretaker_;
-	Originator* Originator_(new Originator);
+	Caretaker l_Caretaker;
+	Originator* l_pOriginator(new Originator);
 
-	Originator_->SetState("State1");
-	Caretaker_.PushMemento(Originator_->CreateMemento());
+	l_pOriginator->SetState("State1");
+	l_Caretaker.PushMemento(l_pOriginator->CreateMemento());
 
-	Originator_->SetState("State2");
-	Caretaker_.PushMemento(Originator_->CreateMemento());
+	l_pOriginator->SetState("State2");
+	l_Caretaker.PushMemento(l_pOriginator->CreateMemento());
 
-	Originator_->SetMemento(Caretaker_.PopMemento());
-	Originator_->SetMemento(Caretaker_.PopMemento());
+	l_pOriginator->SetMemento(l_Caretaker.PopMemento());
+	l_pOriginator->SetMemento(l_Caretaker.PopMemento());
 
-	delete Originator_;
-	Originator_ = nullptr;
+	delete l_pOriginator;
+	l_pOriginator = nullptr;
 }

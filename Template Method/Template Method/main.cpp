@@ -1,65 +1,44 @@
 #include <iostream>
 #include <string>
 
-class Monster
+class AbstractClass
 {
-	std::string m_Name;
-private:
-	virtual void Attack() = 0;
-
-	void Born()
-	{
-		std::cout << m_Name << "이(가) 생성되었다." << std::endl;
-	}
-	void Move()
-	{
-		std::cout << m_Name << "이(가) 이동하였다." << std::endl;
-	}
-	void Die()
-	{
-		std::cout << m_Name << "이(가) 죽었다." << std::endl;
-	}
+protected:
+	void Function1() { std::cout << "AbstractClass::Function1()" << std::endl; }
+	virtual void Function2() = 0;
+	virtual void Function3() = 0;
 public:
-	Monster(std::string Name) : m_Name(Name) {}
-
-	void Act()
+	void Function()
 	{
-		Born();
-		for (size_t i = 0; i < 3; i++)
-		{
-			Move();
-			Attack();
-		}
-		Die();
+		Function1();
+		Function2();
+		Function3();
 	}
 };
 
-class Dragon : public Monster
+class ConcreteClassA : public AbstractClass
 {
-public:
-	Dragon() : Monster("드래곤") {}
-
-	void Attack() override
-	{
-		std::cout << "드래곤이(가) 불을 뿜었다." << std::endl;
-	}
+protected:
+	void Function2() override { std::cout << "ConcreteClassA::Function2()" << std::endl; }
+	void Function3() override { std::cout << "ConcreteClassA::Function3()" << std::endl; }
 };
 
-class Devil : public Monster
+class ConcreteClassB : public AbstractClass
 {
-public:
-	Devil() : Monster("악마") {}
-
-	void Attack() override
-	{
-		std::cout << "악마이(가) 할퀴었다." << std::endl;
-	}
+protected:
+	void Function2() override { std::cout << "ConcreteClassB::Function2()" << std::endl; }
+	void Function3() override { std::cout << "ConcreteClassB::Function3()" << std::endl; }
 };
 
 void main()
 {
-	Monster *Mob1(new Dragon), *Mob2(new Devil);
+	AbstractClass *l_pClassA(new ConcreteClassA), *l_pClassB(new ConcreteClassB);
 
-	Mob1->Act();
-	Mob2->Act();
+	l_pClassA->Function();
+	l_pClassB->Function();
+
+	delete l_pClassA;
+	delete l_pClassB;
+	l_pClassA = nullptr;
+	l_pClassB = nullptr;
 }
