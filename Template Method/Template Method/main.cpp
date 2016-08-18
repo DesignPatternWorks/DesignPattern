@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 
+/* 상위 클래스에서 흐름을 제어하고 하위 클래스에서 구체화하는 패턴
+하위 클래스들의 공통적인 내용은 상위 클래스에 정의하고 클래스별로 상세한 내용을 하위 클래스에서 구현한다 */
+
 class AbstractClass
 {
 protected:
@@ -20,14 +23,14 @@ class ConcreteClassA : public AbstractClass
 {
 protected:
 	void Function2() override { std::cout << "ConcreteClassA::Function2()" << std::endl; }
-	void Function3() override { std::cout << "ConcreteClassA::Function3()" << std::endl; }
+	void Function3() override { std::cout << "ConcreteClassA::Function3()" << std::endl << std::endl; }
 };
 
 class ConcreteClassB : public AbstractClass
 {
 protected:
 	void Function2() override { std::cout << "ConcreteClassB::Function2()" << std::endl; }
-	void Function3() override { std::cout << "ConcreteClassB::Function3()" << std::endl; }
+	void Function3() override { std::cout << "ConcreteClassB::Function3()" << std::endl << std::endl; }
 };
 
 void main()

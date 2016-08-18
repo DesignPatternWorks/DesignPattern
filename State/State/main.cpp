@@ -1,5 +1,7 @@
 #include <iostream>
 
+/* 객체와 객체의 상태에 따른 행동을 변경할 수 있도록 캡슐화한 패턴 */
+
 class State
 {
 public:

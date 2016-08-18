@@ -1,9 +1,15 @@
 #include <iostream>
+#include <string>
+
+/* 복합 객체의 생성과 표현을 분리하여 동일한 생성 절차에서 다른 결과를 만들 수 있게하는 패턴 */
 
 class Product
 {
+	std::string m_String;
 public:
-	void Function() { std::cout << "Product::Function()" << std::endl; }
+	Product(std::string String) : m_String(String) {}
+
+	void Function() { std::cout << "Product" << m_String << "::Function()" << std::endl; }
 };
 
 class Builder
@@ -13,12 +19,12 @@ public:
 	virtual Product* GetResult() = 0;
 };
 
-class ConcreteBuilder : public Builder
+class BuilderA : public Builder
 {
 	Product* m_pProduct;
 public:
-	ConcreteBuilder() : m_pProduct(nullptr) {}
-	~ConcreteBuilder() 
+	BuilderA() : m_pProduct(nullptr) {}
+	~BuilderA()
 	{
 		if (m_pProduct != nullptr)
 		{
@@ -27,7 +33,24 @@ public:
 		}
 	}
 
-	void Build() override { m_pProduct = new Product; }
+	void Build() override { m_pProduct = new Product("A"); }
+	Product* GetResult() override { return m_pProduct; }
+};
+class BuilderB : public Builder
+{
+	Product* m_pProduct;
+public:
+	BuilderB() : m_pProduct(nullptr) {}
+	~BuilderB()
+	{
+		if (m_pProduct != nullptr)
+		{
+			delete m_pProduct;
+			m_pProduct = nullptr;
+		}
+	}
+
+	void Build() override { m_pProduct = new Product("B"); }
 	Product* GetResult() override { return m_pProduct; }
 };
 
@@ -54,13 +77,21 @@ public:
 
 void main()
 {
-	Director* l_pDirector(new Director(new ConcreteBuilder));
-	Product* l_pProduct(l_pDirector->Construct());
+	Director* l_pDirectorA(new Director(new BuilderA));
+	Director* l_pDirectorB(new Director(new BuilderB));
 
-	l_pProduct->Function();
+	Product* l_pProductA(l_pDirectorA->Construct());
+	Product* l_pProductB(l_pDirectorB->Construct());
 
-	delete l_pDirector;
-	delete l_pProduct;
-	l_pDirector = nullptr;
-	l_pProduct = nullptr;
+	l_pProductA->Function();
+	l_pProductB->Function();
+
+	delete l_pDirectorA;
+	delete l_pDirectorB;
+	delete l_pProductA;
+	delete l_pProductB;
+	l_pDirectorA = nullptr;
+	l_pDirectorB = nullptr;
+	l_pProductA = nullptr;
+	l_pProductB = nullptr;
 }

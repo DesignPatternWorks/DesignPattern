@@ -1,6 +1,8 @@
 #include <iostream>
 #include <list>
 
+/* 한 객체의 상태가 변하면 그와 연결되어 있는 모든 객체들의 상태도 갱신되게 하는 패턴 */
+
 class Observer
 {
 public:

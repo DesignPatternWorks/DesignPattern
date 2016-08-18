@@ -1,3 +1,5 @@
+/* 만들어진 객체를 복사하여 새로운 객체를 생성하는 패턴 */
+
 class Prototype
 {
 public:

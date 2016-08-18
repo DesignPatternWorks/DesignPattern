@@ -1,11 +1,13 @@
 #include <iostream>
 
+/* 팩토리 메서드 패턴과 유사하나 객체의 집합을 생성하는 경우 사용하는 패턴
+서로 다른 객체들을 하나의 팩토리가 생성, 관리한다 */
+
 class ProductA
 {
 public:
 	virtual void Function() = 0;
 };
-
 class ProductB
 {
 public:
@@ -20,7 +22,6 @@ public:
 		std::cout << "ProductAA::Function()" << std::endl;
 	}
 };
-
 class ProductAB : public ProductA
 {
 public:
@@ -29,7 +30,6 @@ public:
 		std::cout << "ProductAB::Function()" << std::endl;
 	}
 };
-
 class ProductBA : public ProductB
 {
 public:
@@ -38,7 +38,6 @@ public:
 		std::cout << "ProductBA::Function()" << std::endl;
 	}
 };
-
 class ProductBB : public ProductB
 {
 public:
@@ -55,7 +54,6 @@ protected:
 public:
 	ProductA* Create() { return CreateProduct(); }
 };
-
 class FactoryB
 {
 protected:
@@ -64,25 +62,22 @@ public:
 	ProductB* Create() { return CreateProduct(); }
 };
 
-class CreatorAA : public FactoryA
+class FactoryAA : public FactoryA
 {
 protected:
 	ProductA* CreateProduct() override { return new ProductAA; }
 };
-
-class CreatorAB : public FactoryA
+class FactoryAB : public FactoryA
 {
 protected:
 	ProductA* CreateProduct() override { return new ProductAB; }
 };
-
-class CreatorBA : public FactoryB
+class FactoryBA : public FactoryB
 {
 protected:
 	ProductB* CreateProduct() override { return new ProductBA; }
 };
-
-class CreatorBB : public FactoryB
+class FactoryBB : public FactoryB
 {
 protected:
 	ProductB* CreateProduct() override { return new ProductBB; }
@@ -90,13 +85,13 @@ protected:
 
 void main()
 {
-	CreatorAA l_CreatorAA;
-	CreatorAB l_CreatorAB;
-	CreatorBA l_CreatorBA;
-	CreatorBB l_CreatorBB;
+	FactoryAA l_FactoryAA;
+	FactoryAB l_FactoryAB;
+	FactoryBA l_FactoryBA;
+	FactoryBB l_FactoryBB;
 
-	ProductA *l_pProductAA(l_CreatorAA.Create()), *l_pProductAB(l_CreatorAB.Create());
-	ProductB *l_pProductBA(l_CreatorBA.Create()), *l_pProductBB(l_CreatorBB.Create());
+	ProductA *l_pProductAA(l_FactoryAA.Create()), *l_pProductAB(l_FactoryAB.Create());
+	ProductB *l_pProductBA(l_FactoryBA.Create()), *l_pProductBB(l_FactoryBB.Create());
 
 	l_pProductAA->Function();
 	l_pProductAB->Function();

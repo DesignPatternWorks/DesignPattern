@@ -1,5 +1,7 @@
 #include <iostream>
 
+/* 동적으로 알고리즘을 교체할 수 있도록 만들어진 패턴 */
+
 class Strategy
 {
 public:

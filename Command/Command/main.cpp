@@ -1,5 +1,7 @@
 #include <iostream>
 
+/* 객체와 메소드를 분리하여 캡슐화하는 목적으로 사용하는 패턴 */
+
 class Receiver
 {
 public:
@@ -17,15 +19,6 @@ class ConcreteCommand : public Command
 	Receiver* m_pReceiver;
 public:
 	ConcreteCommand() : m_pReceiver(nullptr) {}
-	~ConcreteCommand()
-	{
-		if (m_pReceiver != nullptr)
-		{
-			delete m_pReceiver;
-			m_pReceiver = nullptr;
-		}
-	}
-
 	void SetReceiver(Receiver* pReceiver) 
 	{
 		if (m_pReceiver != nullptr)
@@ -43,15 +36,6 @@ class Invoker
 	Command* m_pCommand;
 public:
 	Invoker() : m_pCommand(nullptr) {}
-	~Invoker()
-	{
-		if (m_pCommand != nullptr)
-		{
-			delete m_pCommand;
-			m_pCommand = nullptr;
-		}
-	}
-
 	void SetCommand(Command* pCommand) 
 	{
 		if (m_pCommand != nullptr)

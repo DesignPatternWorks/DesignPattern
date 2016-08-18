@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 
+/* 프로그램 상에서 어떤 클래스의 객체가 하나만 존재해야 할 때 사용하는 패턴 */
+
 class Singleton
 {
 	static std::shared_ptr<Singleton> instance;

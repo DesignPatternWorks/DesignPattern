@@ -2,6 +2,8 @@
 #include <string>
 #include <stack>
 
+/* 객체의 데이터를 저장, 복원할 수 있도록 해주는 패턴 */
+
 class Memento
 {
 	std::string m_strState;

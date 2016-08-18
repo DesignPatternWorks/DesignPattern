@@ -1,5 +1,7 @@
 #include <iostream>
 
+/* 객체의 구조와 기능을 따로 분리시키는 패턴 */
+
 class Element;
 class Visitor;
 
